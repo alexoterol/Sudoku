@@ -7,9 +7,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QCom
 from PyQt5.QtCore import QTimer
 from keras.models import model_from_json
 
-
-
-
 class SolucionMachineLearning:
     def __init__(self, tablero) -> None:
         self.tablero = tablero.tablero  # Obtener el tablero del objeto Tablero
@@ -21,14 +18,12 @@ class SolucionMachineLearning:
         self.model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     def solucionar(self):
-        """Resuelve el Sudoku usando Machine Learning (predicciones del modelo)."""
         puzzle = self.format_sudoku()
         puzzle = puzzle.replace('\n', '').replace(' ', '')
         initial_board = np.array([int(j) for j in puzzle]).reshape((9, 9, 1))
         initial_board = (initial_board / 9) - 0.5
 
         while True:
-            # Use the neural network to predict values for empty cells
             predictions = self.model.predict(initial_board.reshape((1, 9, 9, 1))).squeeze()
             pred = np.argmax(predictions, axis=1).reshape((9, 9)) + 1
             prob = np.around(np.max(predictions, axis=1).reshape((9, 9)), 2)
@@ -49,17 +44,14 @@ class SolucionMachineLearning:
             initial_board[x][y] = val
             initial_board = (initial_board / 9) - 0.5
 
-        # Convert the solved puzzle back to a string representation
         solved_puzzle = ''.join(map(str, initial_board.flatten().astype(int)))
         self.tablero = self.string_to_matrix_9x9(solved_puzzle)
 
     def print_sudoku(self):
-        """Imprime el tablero de Sudoku."""
         for row in self.tablero:
             print(" ".join(str(cell) if cell != 0 else "." for cell in row))
     
     def format_sudoku(self):
-        """Convierte el tablero de Sudoku en el formato especificado."""
         formatted_sudoku = ""
         for row in self.tablero:
             formatted_row = " ".join(str(cell) for cell in row)
@@ -67,7 +59,6 @@ class SolucionMachineLearning:
         return formatted_sudoku
     
     def string_to_matrix_9x9(self, sudoku_string):
-        """Convierte una cadena de 81 caracteres en una lista 9x9 de enteros."""
         if len(sudoku_string) != 81:
             raise ValueError("La cadena debe tener exactamente 81 caracteres.")
         
@@ -83,7 +74,6 @@ class SolucionManual:
         self.tablero = tablero.tablero
 
     def solucionar(self):
-        """A dummy backtracking algorithm to solve the Sudoku puzzle."""
         self.backtrack(0, 0)
 
     def backtrack(self, row, col):
@@ -330,14 +320,12 @@ class SudokuGame(QMainWindow):
 
 
     def cell_clicked(self, row, col):
-        """Handles the event when a user clicks on a Sudoku cell."""
         num, ok = QInputDialog.getInt(self, f"Enter a number for cell ({row}, {col})", "Number (1-9):", 1, 1, 9)
         if ok:
             self.grid_buttons[row][col].setText(str(num))
             self.tablero.tablero[row][col] = num
 
     def clear_screen(self):
-        """Clears the current screen layout."""
         central_widget = self.centralWidget()
         if central_widget is not None:
             central_widget.deleteLater()
