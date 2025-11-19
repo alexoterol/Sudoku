@@ -4,7 +4,8 @@ import sys
 import random
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QComboBox, QVBoxLayout, QWidget, QGridLayout, QInputDialog
-from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QColor, QPalette, QFont
+from PyQt5.QtCore import QTimer, Qt
 from keras.models import model_from_json
 
 class SolucionMachineLearning:
@@ -152,7 +153,7 @@ class SudokuGame(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sudoku Game")
-        self.setGeometry(100, 100, 600, 400)
+        self.setGeometry(100, 100, 600, 600)
         self.initUI()
 
         self.timer = QTimer()
@@ -163,7 +164,13 @@ class SudokuGame(QMainWindow):
         widget = QWidget(self)
         layout = QVBoxLayout()
 
+        palette = QPalette()
+        palette.setColor(QPalette.Background, QColor(255, 255, 255))  # Fondo blanco
+        self.setPalette(palette)
+
         self.difficulty_label = QLabel("Select Difficulty:")
+        self.difficulty_label.setFont(QFont("Arial", 18))  # Usar una fuente moderna y más grande
+        self.difficulty_label.setAlignment(Qt.AlignCenter)
         self.difficulty_select = QComboBox()
         self.difficulty_select.addItems(["Easy", "Medium", "Hard"])
 
@@ -171,14 +178,17 @@ class SudokuGame(QMainWindow):
         layout.addWidget(self.difficulty_select)
 
         self.play_button = QPushButton("Play", self)
+        self.play_button.setStyleSheet("background-color: #4CAF50; color: white; border-radius: 10px; padding: 10px;")
         self.play_button.clicked.connect(self.start_play_mode)
         layout.addWidget(self.play_button)
 
         self.auto_button = QPushButton("AutoComplete", self)
+        self.auto_button.setStyleSheet("background-color: #FF9800; color: white; border-radius: 10px; padding: 10px;")
         self.auto_button.clicked.connect(self.start_autocomplete_mode)
         layout.addWidget(self.auto_button)
 
         self.nn_button = QPushButton("Solucion with NN", self)
+        self.nn_button.setStyleSheet("background-color: #2196F3; color: white; border-radius: 10px; padding: 10px;")
         self.nn_button.clicked.connect(self.start_nn_mode)
         layout.addWidget(self.nn_button)
 
