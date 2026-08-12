@@ -14,16 +14,17 @@ The AI model is trained on **9 million Sudoku puzzles** from Kaggle: [Sudoku Dat
 - **Difficulty Levels**: Choose between Easy, Medium, or Hard levels.
   
 ## Modes
-1. **Play Mode**:
-   - Solve the Sudoku puzzle manually.
-   - Enter numbers using the GUI interface.
+The app is a single unified board: pick a difficulty, play manually, or solve it — no separate screens to navigate.
 
-2. **Manual Solution Mode**:
-   - The program automatically solves the puzzle using **backtracking** (recursive algorithm).
+1. **Manual Play**:
+   - Fill in cells yourself using the keyboard or the on-screen numpad.
+   - Conflicting entries flash red immediately.
 
-3. **AI Solution Mode**:
-   - The program solves the puzzle using a pre-trained **neural network** model.
-   - The model uses **Keras** and is loaded from `model_structure.json` and `best_weights.hdf5`.
+2. **Backtracking Solve** (with visualization):
+   - Watch the recursive backtracking algorithm work cell by cell, with an adjustable animation speed (slow / normal / instant) and a live step counter + timer.
+
+3. **AI Solve**:
+   - Solves using a pre-trained **neural network** model, loaded from `model_structure.json` and `best_weights.hdf5` via **Keras**.
 
 ## Installation & Setup
 
@@ -83,13 +84,12 @@ The program generates Sudoku puzzles using a randomized Sudoku generator that cr
 ## User Interface (GUI)
 The graphical interface is built using PyQt5, featuring:<br/>
 
-A 9x9 grid for the Sudoku puzzle.<br/>
-Buttons to play the game, solve manually, or use AI for an automatic solution.<br/>
-A timer to track your time while playing.<br/>
+A 9x9 grid with clearly differentiated 3x3 boxes and a dark/light theme toggle.<br/>
+A control panel with difficulty selection, solve speed, pause/resume, reset, and live time/step metrics.<br/>
+Visual states for given, solved, currently-tried, and conflicting cells.<br/>
 
 ## Controls:<br/>
-Click on cells to select them.<br/>
-Enter numbers (1-9) using the numeric keypad to fill the grid.<br/>
-Use the AutoComplete button to solve the puzzle manually.<br/>
-Use the AI Solve button to solve the puzzle using the trained neural network.<br/>
+Click a cell (or use arrow keys) to select it.<br/>
+Enter numbers with the keyboard (1-9, Backspace/Delete) or the on-screen numpad.<br/>
+Press **Resolver** to watch the backtracking algorithm solve it, or **Resolver con IA** for the neural network solution.<br/>
 
