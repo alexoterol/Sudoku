@@ -1,4 +1,15 @@
 sudoku.csv
-myvenv
-venv/
-venv
+
+# venvs
+.venv/
+myvenv/
+.venv/
+
+# python
+__pycache__/
+*.pyc
+
+# editors/OS
+.vscode/
+.idea/
+.DS_Store
